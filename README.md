@@ -57,6 +57,14 @@ table_purge_chunk=100000 # Select 100K rows each time
 table_purge_days=30 # 30 Days of data to keep in backup
 ```
 
+## Run from CRON
+For running the script and logging the flow
+
+```bash
+*/10 * * * * python <location>/main.py 2&>1 <location>/purge.log
+```
+Means it will run every 10 minutes and put the logs in a file named `purge.log` file. Later you can check the log file for time information.
+
 ## Suggestions
 Please do mail me for any suggestions, I will be glad to include [ferdousul.haque@gmail.com](ferdousul.haque@gmail.com)
 

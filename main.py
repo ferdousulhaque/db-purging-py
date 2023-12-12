@@ -40,7 +40,7 @@ def purge_table() -> None:
     db = get_Connection()
     cursor = db.cursor()
 
-    print('Starting Purging Script')
+    print(str(datetime.datetime.now()) + ' : ' + 'Starting Purging Script')
     sql = '''SET SQL_SAFE_UPDATES = 0'''
     cursor.execute(sql)
     db.commit()
@@ -54,7 +54,7 @@ def purge_table() -> None:
     db.commit()
     query_end = time.time()
     select_insert_time = query_end - query_start
-    print("Select Insert Time: {}".format(select_insert_time))
+    print(str(datetime.datetime.now()) + ' : ' + "Select Insert Time: {}".format(select_insert_time))
 
     # Select and Delete from Main Table
     query_start = time.time()
@@ -66,7 +66,7 @@ def purge_table() -> None:
     db.commit()
     query_end = time.time()
     select_delete_time = query_end - query_start
-    print("Select Delete Time: {}".format(select_delete_time))
+    print(str(datetime.datetime.now()) + ' : ' + "Select Delete Time: {}".format(select_delete_time))
 
     # Purge from Backup Table
     query_start = time.time()
@@ -77,13 +77,13 @@ def purge_table() -> None:
     db.commit()
     query_end = time.time()
     purge_backup_time = query_end - query_start
-    print("Purge from Backup Time: {}".format(purge_backup_time))
+    print(str(datetime.datetime.now()) + ' : ' + "Purge from Backup Time: {}".format(purge_backup_time))
 
     sql = '''SET SQL_SAFE_UPDATES = 1'''
     cursor.execute(sql)
     db.commit()
     db.close()
-    print('Completing Purging Script')
+    print(str(datetime.datetime.now()) + ' : ' + 'Completing Purging Script')
 
 
 try:
