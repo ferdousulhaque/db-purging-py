@@ -14,12 +14,14 @@ database_password = config.get('database', 'pass')
 main_table_name = config.get('main_table', 'table_name')
 main_table_time_field_name = config.get('main_table', 'table_time_field_name')
 main_table_order_by = config.get('main_table', 'table_order_by')
+main_table_id_column = config.get('main_table', 'table_id_column')
 main_table_purge_chunk = config.get('main_table', 'table_purge_chunk')
 main_table_select_before_minutes = config.get('main_table', 'table_before_minutes')
 backup_table_name = config.get('backup_table', 'table_name')
 backup_table_purge_chunk = config.get('backup_table', 'table_purge_chunk')
 backup_table_purge_days = config.get('backup_table', 'table_purge_days')
 backup_table_time_field_name = config.get('backup_table', 'table_time_field_name')
+backup_table_id_column = config.get('backup_table', 'table_id_column')
 backup_table_order_by = config.get('backup_table', 'table_order_by')
 
 MYSQL_DB = {
@@ -58,8 +60,8 @@ def purge_table() -> None:
 
     # Select and Delete from Main Table
     query_start = time.time()
-    sql = f'''delete from {main_table_name} where {main_table_order_by} in 
-    (SELECT * FROM (SELECT {main_table_order_by} FROM {main_table_name} 
+    sql = f'''delete from {main_table_name} where {main_table_id_column} in 
+    (SELECT * FROM (SELECT {main_table_id_column} FROM {main_table_name} 
     where {main_table_time_field_name} < date_sub(now(), interval {main_table_select_before_minutes} minute) 
     order by {main_table_order_by} asc limit {main_table_purge_chunk}) as t);'''
     cursor.execute(sql)
@@ -72,7 +74,7 @@ def purge_table() -> None:
     query_start = time.time()
     sql = f'''delete from {backup_table_name} where {backup_table_time_field_name} < date_sub(now(), 
     interval {backup_table_purge_days} day)
-    order by otp_id asc limit {backup_table_purge_chunk};'''
+    order by {backup_table_id_column} asc limit {backup_table_purge_chunk};'''
     cursor.execute(sql)
     db.commit()
     query_end = time.time()

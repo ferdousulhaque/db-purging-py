@@ -45,14 +45,16 @@ pass=toor
 [main_table]
 table_name=transactions
 table_time_field_name=updated_at
-table_order_by=id
+table_order_by=updated_at
+table_id_column=id
 table_purge_chunk=10000 # Select 10K rows each time
 table_before_minutes=300 # Before 5 Minutes
 
 [backup_table]
 table_name=transactions_backup
 table_time_field_name=updated_at
-table_order_by=id
+table_order_by=updated_at
+table_id_column=id
 table_purge_chunk=100000 # Select 100K rows each time
 table_purge_days=30 # 30 Days of data to keep in backup
 ```
