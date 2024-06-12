@@ -6,7 +6,7 @@ import configparser
 # Configs Read from config.ini file
 config = configparser.ConfigParser()
 config.read_file(open(r'config.ini'))
-database_ip = int(config.get('database', 'ip'))
+database_ip = config.get('database', 'ip')
 database_port = int(config.get('database', 'port'))
 database_name = config.get('database', 'name')
 database_user = config.get('database', 'user')
